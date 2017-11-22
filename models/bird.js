@@ -1,13 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const FamilySchema = new Schema({
-    name: String
-});
-
 const BirdSchema = new Schema({
     name: String,
-    family: FamilySchema,
+    family: String,
     appearance: String,
     distribution: String,
     photoUrl: String,
