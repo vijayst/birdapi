@@ -11,11 +11,13 @@ class UserController {
 
     }
 
-    static user(req, res) {
+    static index(req, res) {
 
     }
 
     static remove(req, res) {
-        
+
     }
 }
+
+module.exports = UserController;

@@ -1,15 +1,26 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+const dotenv = require('dotenv');
 const BirdController = require('./controllers/birdController');
 const UserController = require('./controllers/userController');
-const PORT = 3000;
+
+dotenv.config();
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/birddb', { useMongoClient: true });
+mongoose.connect(process.env.MONGO_URL, { useMongoClient: true });
 
 const app = express();
 app.use(bodyParser.json());
+
+app.use(session({
+    secret: 'foo',
+    resave: false,
+    saveUninitialized: true,  
+    store: new MongoStore({ url: process.env.MONGO_URL })
+}));
 
 app.post('/api/birds', BirdController.create);
 app.put('/api/birds/:id', BirdController.update);
@@ -22,6 +33,6 @@ app.post('/api/logout', UserController.logout);
 app.get('/api/user', UserController.index);
 app.delete('/api/user/:id', UserController.remove);
 
-app.listen(PORT, () => {
-    console.log(`listening at ${PORT}`);
+app.listen(process.env.PORT, () => {
+    console.log(`listening at ${process.env.PORT}`);
 });
