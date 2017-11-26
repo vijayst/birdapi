@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const BirdController = require('./controllers/birdController');
 const UserController = require('./controllers/userController');
+const loginMiddleware = require('./middleware/loginMiddleware');
 
 dotenv.config();
 
@@ -19,7 +20,7 @@ app.delete('/api/birds/:id', BirdController.remove);
 app.get('/api/birds', BirdController.index);
 
 app.post('/api/signup', UserController.signup);
-app.post('/api/login', UserController.login);
+app.post('/api/login', loginMiddleware, UserController.login);
 app.post('/api/logout', UserController.logout);
 app.get('/api/user', UserController.index);
 app.delete('/api/user/:id', UserController.remove);

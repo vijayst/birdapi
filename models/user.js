@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
     name: String,
+    password: String,
     email: String,
     seen: [{
         type: Schema.Types.ObjectId,
@@ -20,6 +21,11 @@ UserSchema.pre('save', function(next) {
     this.password = bcrypt.hashSync(this.password, salt);
     next();
 });
+
+UserSchema.methods.comparePassword = function(password, cb) {
+    const match = bcrypt.compareSync(password, this.password);
+    cb(null, match);
+}
 
 const User = mongoose.model('user', UserSchema);
 module.exports = User;
