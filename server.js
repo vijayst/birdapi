@@ -1,8 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
 const dotenv = require('dotenv');
 const BirdController = require('./controllers/birdController');
 const UserController = require('./controllers/userController');
@@ -14,13 +12,6 @@ mongoose.connect(process.env.MONGO_URL, { useMongoClient: true });
 
 const app = express();
 app.use(bodyParser.json());
-
-app.use(session({
-    secret: 'foo',
-    resave: false,
-    saveUninitialized: true,  
-    store: new MongoStore({ url: process.env.MONGO_URL })
-}));
 
 app.post('/api/birds', BirdController.create);
 app.put('/api/birds/:id', BirdController.update);

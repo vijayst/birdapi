@@ -1,9 +1,7 @@
 {
   "dependencies": {
-    "connect-mongo": "^2.0.0",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
-    "express-session": "^1.15.6",
     "mongoose": "^4.13.4"
   },
   "scripts": {
