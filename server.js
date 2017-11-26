@@ -23,9 +23,7 @@ app.get('/api/birds', BirdController.index);
 
 app.post('/api/signup', UserController.signup);
 app.post('/api/login', loginMiddleware, UserController.login);
-app.post('/api/logout', UserController.logout);
 app.get('/api/user', tokenMiddleware, UserController.index);
-app.delete('/api/user/:id', UserController.remove);
 
 app.listen(process.env.PORT, () => {
     console.log(`listening at ${process.env.PORT}`);

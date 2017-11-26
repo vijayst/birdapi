@@ -32,17 +32,9 @@ class UserController {
         res.send({ token });
     }
 
-    static logout(req, res) {
-
-    }
-
     static index(req, res) {
         const { name, email } = req.user;
         res.send({ name, email });
-    }
-
-    static remove(req, res) {
-
     }
 }
 
