@@ -37,7 +37,8 @@ class UserController {
     }
 
     static index(req, res) {
-
+        const { name, email } = req.user;
+        res.send({ name, email });
     }
 
     static remove(req, res) {

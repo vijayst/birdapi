@@ -1,12 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+
 const dotenv = require('dotenv');
+dotenv.config();
+
 const BirdController = require('./controllers/birdController');
 const UserController = require('./controllers/userController');
 const loginMiddleware = require('./middleware/loginMiddleware');
-
-dotenv.config();
+const tokenMiddleware = require('./middleware/tokenMiddleware');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGO_URL, { useMongoClient: true });
@@ -22,7 +24,7 @@ app.get('/api/birds', BirdController.index);
 app.post('/api/signup', UserController.signup);
 app.post('/api/login', loginMiddleware, UserController.login);
 app.post('/api/logout', UserController.logout);
-app.get('/api/user', UserController.index);
+app.get('/api/user', tokenMiddleware, UserController.index);
 app.delete('/api/user/:id', UserController.remove);
 
 app.listen(process.env.PORT, () => {
