@@ -6,6 +6,7 @@ const UserSchema = new Schema({
     name: String,
     password: String,
     email: String,
+    role: String,
     seen: [{
         type: Schema.Types.ObjectId,
         ref: 'bird'
