@@ -1,12 +1,10 @@
+const assert = require('assert');
 const Comment = require('../models/comment');
 
 class CommentController {
     static create(req, res) {
-        if (!req.body.bird) {
-            res.status(422).send({ error: 'Bird is required!' });
-            return;
-        }
         const commentJson = req.body;
+        assert.ok(commentJson.bird, 'Bird is required');
         commentJson.datePosted = new Date();
         commentJson.user = req.user;
         const comment = new Comment(commentJson);

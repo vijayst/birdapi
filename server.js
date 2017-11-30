@@ -45,6 +45,10 @@ app.get('/api/user', tokenMiddleware, UserController.index);
 
 app.post('/api/comments', tokenMiddleware, CommentController.create);
 
+app.use((err, req, res, next) => {
+    res.status(500).send({ error: err.message });
+});
+
 app.listen(process.env.PORT, () => {
     console.log(`listening at ${process.env.PORT}`);
 });
