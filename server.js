@@ -7,6 +7,7 @@ dotenv.config();
 
 const BirdController = require('./controllers/birdController');
 const UserController = require('./controllers/userController');
+const CommentController = require('./controllers/commentController');
 const loginMiddleware = require('./middleware/loginMiddleware');
 const tokenMiddleware = require('./middleware/tokenMiddleware');
 const adminMiddleware = require('./middleware/adminMiddleware');
@@ -41,6 +42,8 @@ app.get('/api/birds', BirdController.index);
 app.post('/api/signup', UserController.signup);
 app.post('/api/login', loginMiddleware, UserController.login);
 app.get('/api/user', tokenMiddleware, UserController.index);
+
+app.post('/api/comments', tokenMiddleware, CommentController.create);
 
 app.listen(process.env.PORT, () => {
     console.log(`listening at ${process.env.PORT}`);
