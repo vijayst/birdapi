@@ -6,7 +6,11 @@ const BirdSchema = new Schema({
     family: String,
     appearance: String,
     distribution: String,
-    photoUrl: String
+    photoUrl: String,
+    likes: [{
+        type: Schema.Types.ObjectId,
+        ref: 'user'
+    }]
 });
 
 const Bird = mongoose.model('bird', BirdSchema);
