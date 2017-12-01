@@ -10,10 +10,6 @@ const UserSchema = new Schema({
     seen: [{
         type: Schema.Types.ObjectId,
         ref: 'bird'
-    }],
-    comments: [{
-        type: Schema.Types.ObjectId,
-        ref: 'comment'
     }]
 });
 
