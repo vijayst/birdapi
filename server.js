@@ -44,6 +44,7 @@ app.post('/api/login', loginMiddleware, UserController.login);
 app.get('/api/user', tokenMiddleware, UserController.index);
 
 app.post('/api/comments', tokenMiddleware, CommentController.create);
+app.delete('/api/comments/:id', tokenMiddleware, CommentController.remove);
 
 app.use((err, req, res, next) => {
     res.status(500).send({ error: err.message });

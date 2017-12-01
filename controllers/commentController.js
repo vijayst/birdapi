@@ -1,4 +1,5 @@
 const assert = require('assert');
+const mongoose = require('mongoose');
 const Comment = require('../models/comment');
 
 class CommentController {
@@ -14,7 +15,21 @@ class CommentController {
             .populate('user', 'name email')
             .populate('bird', 'name')
         })
-        .then(c => res.send(c));
+        .then(c => res.send(c))
+        .catch(next);
+    }
+
+    static remove(req, res, next) {
+        const { id } = req.params;
+        assert.ok(mongoose.Types.ObjectId.isValid(id), 'Not a valid id');
+        Comment.findById(id)
+        .then(comment => {
+            assert.ok(comment, 'Comment is not available.');
+            assert.equal(req.user.id, comment.user, 'Cannot delete comment from another user.');
+            return comment.remove();
+        })
+        .then(() => res.send({ success: true }))
+        .catch(next);
     }
 }
 
