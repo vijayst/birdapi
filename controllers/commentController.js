@@ -66,6 +66,22 @@ class CommentController {
             })
             .catch(next);
     }
+
+    static commentsByUser(req, res, next) {
+        let { offset, limit } = req.query;
+        offset = offset || DEFAULT_OFFSET;
+        limit = limit || DEFAULT_LIMIT;
+        Promise.all([
+            Comment.find({ user: req.user._id })
+                .skip(offset)
+                .limit(limit),
+            Comment.count({ user: req.user._id })
+        ])
+            .then(([comments, count]) => {
+                res.send({ comments, count });
+            })
+            .catch(next);
+    }
 }
 
 module.exports = CommentController;

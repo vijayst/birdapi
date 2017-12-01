@@ -49,6 +49,7 @@ app.post('/api/comments', tokenMiddleware, CommentController.create);
 app.put('/api/comments/:id', tokenMiddleware, CommentController.update);
 app.delete('/api/comments/:id', tokenMiddleware, CommentController.remove);
 app.get('/api/birds/:id/comments', CommentController.commentsByBird);
+app.get('/api/user/comments', tokenMiddleware, CommentController.commentsByUser);
 
 app.use((err, req, res, next) => {
     res.status(500).send({ error: err.message });
