@@ -1,5 +1,6 @@
 const jwt = require('jwt-simple');
 const assert = require('assert');
+const mongoose = require('mongoose');
 const User = require('../models/user');
 
 class UserController {
@@ -41,7 +42,13 @@ class UserController {
     }
 
     static remove(req, res, next) {
-        next();
+        const { id } = req.params;
+        const { _id } = req.user;
+        assert.notEqual(id, _id, 'Cannot delete self.');
+        assert.ok(mongoose.Types.ObjectId.isValid(id), 'Not a valid id');
+        User.findByIdAndRemove(id)
+            .then(() => res.send({ success: true }))
+            .catch(next);
     }
 }
 
