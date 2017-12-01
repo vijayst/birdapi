@@ -46,6 +46,7 @@ app.delete('/api/user', tokenMiddleware, UserController.removeSelf);
 app.delete('/api/user/:id', tokenMiddleware, adminMiddleware, UserController.remove);
 
 app.post('/api/comments', tokenMiddleware, CommentController.create);
+app.put('/api/comments/:id', tokenMiddleware, CommentController.update);
 app.delete('/api/comments/:id', tokenMiddleware, CommentController.remove);
 
 app.use((err, req, res, next) => {

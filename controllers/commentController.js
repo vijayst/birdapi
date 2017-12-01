@@ -13,7 +13,21 @@ class CommentController {
         .then(() => {
             return Comment.findById(comment.id)
             .populate('user', 'name email')
-            .populate('bird', 'name')
+            .populate('bird', 'name');
+        })
+        .then(c => res.send(c))
+        .catch(next);
+    }
+
+    static update(req, res, next) {
+        const { id } = req.params;
+        assert.ok(mongoose.Types.ObjectId.isValid(id), 'Not a valid id.');
+        const commentJson = req.body;
+        Comment.findByIdAndUpdate(id, commentJson)
+        .then(() => {
+            return Comment.findById(id)
+            .populate('user', 'name email')
+            .populate('bird', 'name');
         })
         .then(c => res.send(c))
         .catch(next);
