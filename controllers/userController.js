@@ -1,28 +1,23 @@
 const jwt = require('jwt-simple');
+const assert = require('assert');
 const User = require('../models/user');
 
 class UserController {
-    static signup(req, res) {
+    static signup(req, res, next) {
         const { email, password } = req.body;
-        if (!email || !password) {
-            res.status(422).send({ error: 'Email and password is required.' });
-        }
+        assert.ok(email, 'Email is required.');
+        assert.ok(password, 'Password is required.');
         User.findOne({ email })
-        .then(user => {
-            if (user) {
-                return Promise.reject('Email is in use');
-            } else {
-                const user = new User({ email, password });
-                return user.save();
-            }
+        .then(userInDb => {
+            assert.ok(!userInDb, 'Email is in use');
+            const user = new User({ email, password });
+            return user.save();
         })
         .then((user) => {
             const token = jwt.encode({ sub: user.id }, process.env.JWT_SECRET);
             res.send({ token });
         })
-        .catch(error => {
-            res.status(422).send({ error });
-        }); 
+        .catch(next); 
     }
 
     static login(req, res) {

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Comment = require('../models/comment');
 
 class CommentController {
-    static create(req, res) {
+    static create(req, res, next) {
         const commentJson = req.body;
         assert.ok(commentJson.bird, 'Bird is required');
         commentJson.datePosted = new Date();
