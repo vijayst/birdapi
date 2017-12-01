@@ -46,6 +46,29 @@ class BirdController {
             })
             .catch(next);
     }
+
+    static toggleLike(req, res, next) {
+        const userId = req.user._id;
+        const birdId = req.params.id;
+        Bird.findById(birdId)
+        .populate({
+            path: 'likes',
+            match: { _id: userId }
+        })
+        .then(bird => {
+            assert.ok(bird, 'Bird not found');
+            if (bird.likes.length) {
+                return bird.update({ $pull: { likes: userId } });
+            } else {
+                bird.likes.push(req.user);
+                return bird.save();
+            }
+        })
+        .then(() => {
+            res.send({ success: true });
+        })
+        .catch(next);
+    }
 }
 
 module.exports = BirdController;

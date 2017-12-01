@@ -38,6 +38,7 @@ app.post('/api/birds', tokenMiddleware, adminMiddleware, BirdController.create);
 app.put('/api/birds/:id', tokenMiddleware, adminMiddleware, BirdController.update);
 app.delete('/api/birds/:id', tokenMiddleware, adminMiddleware, BirdController.remove);
 app.get('/api/birds', BirdController.index);
+app.post('/api/birds/:id/like', tokenMiddleware, BirdController.toggleLike);
 
 app.post('/api/signup', UserController.signup);
 app.post('/api/login', loginMiddleware, UserController.login);
