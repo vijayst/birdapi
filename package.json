@@ -10,7 +10,7 @@
     "passport-local": "^1.0.0"
   },
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "devDependencies": {
     "nodemon": "^1.12.1"
