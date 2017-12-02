@@ -1,9 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-
 const dotenv = require('dotenv');
-dotenv.config();
+
+if (!process.env.HEROKU) {
+    dotenv.config();
+}
 
 const BirdController = require('./controllers/birdController');
 const UserController = require('./controllers/userController');
