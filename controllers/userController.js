@@ -23,7 +23,6 @@ class UserController {
     }
 
     static login(req, res) {
-        // passport attaches the user to the request!
         const { user } = req;
         const token = jwt.encode({ sub: user.id }, process.env.JWT_SECRET);
         res.send({ token });
