@@ -50,6 +50,7 @@ class BirdController {
     static toggleLike(req, res, next) {
         const userId = req.user._id;
         const birdId = req.params.id;
+        assert.ok(mongoose.Types.ObjectId.isValid(birdId), 'Invalid id');
         Bird.findById(birdId)
         .populate({
             path: 'likes',
