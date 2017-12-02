@@ -34,6 +34,7 @@ class BirdController {
         const { offset, limit } = req.query;
         Promise.all([
             Bird.find({})
+                .select('name family photoUrl')
                 .skip(offset)
                 .limit(limit),
             Bird.count()
