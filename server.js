@@ -45,6 +45,7 @@ app.post('/api/login', loginMiddleware, UserController.login);
 app.get('/api/user', tokenMiddleware, UserController.index);
 app.delete('/api/user', tokenMiddleware, UserController.removeSelf);
 app.delete('/api/user/:id', tokenMiddleware, adminMiddleware, UserController.remove);
+app.post('/api/birds/:id/seen', tokenMiddleware, UserController.toggleSeen);
 
 app.post('/api/comments', tokenMiddleware, CommentController.create);
 app.put('/api/comments/:id', tokenMiddleware, CommentController.update);
