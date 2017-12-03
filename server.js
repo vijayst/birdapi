@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
+const cors = require('cors');
 
 if (!process.env.HEROKU) {
     dotenv.config();
@@ -34,6 +35,7 @@ mongoose.connection.once('open', () => {
 });
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 
 app.post('/api/birds', tokenMiddleware, adminMiddleware, BirdController.create);
